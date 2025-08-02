@@ -1,4 +1,5 @@
-tensorflow
+torch
+torchvision
 opencv-python
 numpy
 pandas
