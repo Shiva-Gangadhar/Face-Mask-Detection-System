@@ -1,107 +1,119 @@
-# 😷 Real-Time Face Mask Detection System
+# 😷 Real-Time Face Mask Detection using PyTorch
 
-This project uses a deep learning model to detect whether a person is wearing a face mask or not in **real time** using a webcam feed. It can be deployed in public places such as offices, malls, hospitals, etc., to ensure safety and compliance.
-
-## 📌 Features
-
-- Real-time face detection and classification
-- Uses Keras-trained CNN model
-- Uses OpenCV for video capture and Haarcascade for face detection
-- Clean UI with bounding boxes and prediction labels
-- High accuracy (~96%) on validation set
+A real-time face mask detection application using a CNN-MLP hybrid model implemented in PyTorch. This system classifies whether a person is wearing a mask or not through live webcam feed.
 
 ---
 
-## 📂 Project Structure
+## 🚀 Features
 
-```
-├── mask_model.h5                    # Trained model (Keras)
-├── RealTime_Face_Mask.ipynb         # Jupyter notebook for real-time detection
-├── Face Mask Detection.ipynb        # Model training notebook (Google Colab)
-├── requirements.txt                 # Dependencies
-└── README.md                        # Project documentation
-```
+- Real-time detection using your device's webcam.
+- Lightweight model using CNN feature extraction and MLP classification.
+- Visual output with OpenCV: displays "Mask" or "No Mask" on screen.
+- Trained on custom or public dataset (e.g., Face Mask Detection dataset).
 
 ---
 
-## 🧠 Model Training (Google Colab)
+## 🧠 Model Architecture
 
-- Dataset: Custom dataset with `with_mask` and `without_mask` folders
-- Image size: 128x128
-- Model: CNN with Conv2D, BatchNorm, MaxPooling, Dense, Dropout
-- Accuracy: **~96%** on test data
+The model used is a custom CNNtoMLP architecture which:
+- Extracts features from facial images using CNN layers.
+- Passes flattened features through multiple MLP (fully-connected) layers.
+- Uses `ReLU`, `Dropout`, and `BatchNorm` for regularization and better generalization.
 
-### ✨ Model Architecture (Keras)
-```python
-Conv2D(32, kernel_size=19) → BatchNorm → MaxPool
-Conv2D(64, kernel_size=19) → BatchNorm → MaxPool
-Flatten → Dense(128) → Dropout(0.5) → Dense(64) → Dropout(0.5) → Dense(2)
-```
+You can find the model defined in `model_definition.py`.
 
 ---
 
-## 💻 How to Run Real-Time Detection
+## 🗂️ Project Structure
 
-### 🛠️ 1. Install Requirements
+face-mask-detector/
+│
+├── model_definition.py # Contains CNNtoMLP model architecture
+├── model_weights.pth # Trained PyTorch model weights
+├── detect_from_camera.py # Script to run real-time detection
+├── train_model.py # Optional: your training pipeline
+├── requirements.txt # Required Python packages
+├── README.md # Project documentation
 
+yaml
+Copy
+Edit
+
+---
+
+## 🔧 Installation
+
+### 1. Clone the repository
 ```bash
+git clone https://github.com/your-username/face-mask-detector.git
+cd face-mask-detector
+2. Install dependencies
+Create a virtual environment (optional) and install dependencies:
+
+bash
+Copy
+Edit
 pip install -r requirements.txt
-```
+3. Download Trained Weights
+Place your trained model file (model_weights.pth) inside the root folder if not already there.
 
-Or manually:
+🎥 Running Real-Time Detection
+bash
+Copy
+Edit
+python detect_from_camera.py
+This will:
 
-```bash
-pip install tensorflow opencv-python numpy
-```
+Launch your webcam.
 
-### 📸 2. Run the Notebook
+Detect faces using Haar Cascades (or a different detector if implemented).
 
-Open the notebook:
-```bash
-RealTime_Face_Mask.ipynb
-```
+Classify each face as Mask or No Mask.
 
-Make sure your webcam is connected and the file `mask_model.h5` is in the same directory.
+Overlay predictions on the video frame.
 
-Press **`q`** to quit the webcam window.
+🧪 Evaluation (Optional)
+If you want to evaluate your model on a test dataset:
 
----
+python
+Copy
+Edit
+# Inside test_model.py or notebook
+accuracy = correct / total
+print(f"Test Accuracy: {accuracy * 100:.2f}%")
+📦 Dependencies
+Python 3.8+
 
-## 📊 Output
+PyTorch
 
-- Green box → Person **with mask**
-- Red box → Person **without mask**
-- Label includes class + confidence score
+OpenCV
 
----
+NumPy
 
-## 🧪 Known Issues & Fixes
+torchvision
 
-- If incorrect predictions occur:
-  - Improve face crop quality
-  - Use RGB instead of BGR
-  - Apply threshold tuning (`if prob[1] > 0.9`)
-  - Add more diverse images to the dataset
+You can install them via:
 
----
+bash
+Copy
+Edit
+pip install torch torchvision opencv-python numpy
+📸 Example Output
 
-## 🔄 Future Improvements
 
-- Deploy on edge devices (e.g., Raspberry Pi, Jetson Nano)
-- Integrate attendance or access control systems
-- Use Mediapipe or YOLOv8 for better face detection
-- Add GUI or alert system for non-compliance
+✅ To-Do
+ Improve face detection with SSD or MTCNN
 
----
+ Add GUI using Streamlit or PyQt
 
-## 🤝 Credits
+ Export to ONNX or TensorFlow Lite for mobile use
 
-- Developed by: **Shiv Gangadhar**
-- Libraries used: TensorFlow/Keras, OpenCV, NumPy
-- Dataset: Combined open-source and custom-curated images
+📝 License
+This project is licensed under the MIT License. See LICENSE for details.
 
----
+🙌 Acknowledgements
+PyTorch
 
-## 🛡️ License
+OpenCV
 
-This project is open source under the [MIT License](LICENSE).
+Datasets like Face Mask Detection
